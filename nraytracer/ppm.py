@@ -3,12 +3,12 @@
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
 
 from __future__ import annotations
-from ndsl.ntypes import *
+from nimic.ntypes import *
 
-from ndsl.std.os import *
-from ndsl.std.paths import *
-from ndsl.std.strformat import *
-from ndsl.std.strutils import *
+from nimic.std.os import *
+from nimic.std.paths import *
+from nimic.std.strformat import *
+from nimic.std.strutils import *
 from primitives import Canvas, clamp
 
 @dispatch

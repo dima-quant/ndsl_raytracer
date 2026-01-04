@@ -3,7 +3,7 @@
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
 
 from __future__ import annotations
-from ndsl.ntypes import *
+from nimic.ntypes import *
 
 # Internal
 from hittables import Scene, sphere, movingSphere

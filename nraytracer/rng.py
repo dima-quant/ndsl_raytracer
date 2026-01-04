@@ -3,8 +3,8 @@
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
 
 from __future__ import annotations
-from ndsl.ntypes import *
-from ndsl.std.tables import *
+from nimic.ntypes import *
+from nimic.std.tables import *
 
 with const:
     F64_Bits = 64
@@ -170,7 +170,7 @@ class Rng(Object):
 # Sanity checks
 # ------------------------------------------------------------
 if comptime(__name__ == "__main__"):
-    # from ndsl.std.tables import CountDict
+    # from nimic.std.tables import CountDict
     # import std.times
 
     # # TODO: proper statistical tests

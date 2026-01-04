@@ -3,10 +3,10 @@
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
 
 from __future__ import annotations
-from ndsl.ntypes import *
+from nimic.ntypes import *
 
-from ndsl.std.math import *
-from ndsl.system.ansi_c import c_malloc, c_free, c_size_t
+from nimic.std.math import *
+from nimic.system.ansi_c import c_malloc, c_free, c_size_t
 from colors import Color
 
 class Canvas(Object):

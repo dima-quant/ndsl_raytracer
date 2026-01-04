@@ -3,7 +3,7 @@
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
 
 from __future__ import annotations
-from ndsl.ntypes import *
+from nimic.ntypes import *
 
 from math import tan
 from primitives import Point3, Vec3, Time, Ray, ray, Degrees, degToRad

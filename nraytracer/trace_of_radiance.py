@@ -3,9 +3,9 @@
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
 
 from __future__ import annotations
-from ndsl.ntypes import *
+from nimic.ntypes import *
 
-from ndsl.std.os import *
+from nimic.std.os import *
 # from std.strformat import *
 # from std.monotimes import *
 from primitives import newCanvas, point3, vec3, Time, Degrees
