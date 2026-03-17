@@ -1,0 +1,23 @@
+version = 1
+revision = 3
+requires-python = ">=3.12"
+
+[[package]]
+name = "nimic"
+version = "0.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/53/7ef0e44bf4bc742c3433b54ec95c6106d0736127e57234875de702333205/nimic-0.0.4.tar.gz", hash = "sha256:743de9181232e129ae4c65a3a8666575d0d0fff1fbba17524e46e7259c4fd632", size = 52760, upload-time = "2026-03-16T19:54:15.454Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ab/88/2d3708c9f304ece53826dfd696c0e830030d58174f662a714b6386849d64/nimic-0.0.4-py3-none-any.whl", hash = "sha256:50fb3bad160e1355f2888ea3bf230a8fdd9a271e11092211b84af3a63a720cf1", size = 60461, upload-time = "2026-03-16T19:54:14.092Z" },
+]
+
+[[package]]
+name = "nraytracer"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "nimic" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "nimic", specifier = ">=0.0.4" }]
