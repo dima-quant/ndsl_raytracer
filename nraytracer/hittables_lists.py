@@ -1,6 +1,9 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
@@ -46,7 +49,7 @@ class Scene(Object):
 
     def clear(self: mut @ Scene):
         """{.inline, noSideEffect.}"""
-        self.objects.setLen(0)
+        self.objects.set_len(0)
 
     # Immutable routines
     # ---------------------------------------------------------
@@ -57,7 +60,7 @@ class Scene(Object):
         result = HittableList()
         result.len = len(scene.objects)
         result.objects = cast[ptr[UncheckedArray[HittableVariant]]](
-        unsafeAddr(scene.objects[0])
+        unsafe_addr(scene.objects[0])
         )
         return result
 

@@ -1,12 +1,15 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
 
 from math import tan
-from primitives import Point3, Vec3, Time, Ray, ray, Degrees, degToRad
+from primitives import Point3, Vec3, CTime, Ray, ray, Degrees, degToRad
 from sampling import Rng, random_in_unit_disk, random
 
 class Camera(Object):
@@ -18,8 +21,8 @@ class Camera(Object):
     v: Vec3
     w: Vec3   # Orthonormal basis that describe camera orientation
     lens_radius: float64
-    shutterOpen: Time
-    shutterClose: Time
+    shutterOpen: CTime
+    shutterClose: CTime
 
     def ray(self: Camera, s: float64, t: float64, var_rng: mut @ Rng) -> Ray:
         with let:
@@ -38,7 +41,7 @@ class Camera(Object):
 def camera(lookFrom: Point3, lookAt: Point3, view_up: Vec3,
              vertical_field_of_view: Degrees, aspect_ratio: float64,
              aperture: float64, focus_distance: float64,
-             shutterOpen = Time(0.0), shutterClose = Time(0.0)
+             shutterOpen = CTime(0.0), shutterClose = CTime(0.0)
             ) -> Camera:
     with let:
         theta = degToRad(vertical_field_of_view)

@@ -1,6 +1,9 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
@@ -93,9 +96,9 @@ class  Vec3(Object):
         """{.inline.}"""
         return u * scalar
 
-    def __truediv__(u: Vec3, scalar: float64) -> Vec3:
+    def __truediv__(self, scalar: float64) -> Vec3:
         """{.inline.}"""
-        return u * (1.0 / scalar)
+        return self * (1.0 / scalar)
 
     def dot(u: Vec3, v: Vec3) -> float64:
         """{.inline.}"""
@@ -111,9 +114,10 @@ class  Vec3(Object):
         result.z = u.x * v.y - u.y * v.x
         return result
 
-    def unit_vector(u: Vec3) -> UnitVector:
+    # if self is not annotated, it will be derived from the class name (as not mutable)
+    def unit_vector(self) -> UnitVector:
         """{.inline.}"""
-        return UnitVector(u / u.length())
+        return UnitVector(self / self.length())
 
 
 @distinct

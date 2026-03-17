@@ -1,6 +1,9 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
@@ -16,6 +19,10 @@ with export:
 
 # Random routines
 # ------------------------------------------------------
+@dispatch
+def random(rng: mut @ Rng, _: type[float32]) -> float32:
+    """{.inline, noSideEffect.}"""
+    return float32(rng.uniform(float64)) # TODO: check if there is a better way to do this
 
 @dispatch
 def random(rng: mut @ Rng, _: type[float64]) -> float64:
@@ -124,7 +131,7 @@ def random(rng: mut @ Rng, _: type[Attenuation], min: float64, max: float64) -> 
 
 if comptime(__name__ == "__main__"):
     with var: _rng = Rng()
-    with let: timeSeed = 54 #uint32(getTime().toUnix() & (i64(1) << 32) - 1) # unixTime mod 2^32
+    with let: timeSeed = 54
     _rng.seed(timeSeed)
     print(random(_rng, float64))
     print(random(_rng, float64))

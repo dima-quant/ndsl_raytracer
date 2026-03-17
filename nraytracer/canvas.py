@@ -1,12 +1,15 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
 
 from nimic.std.math import *
-from nimic.system.ansi_c import c_malloc, c_free, c_size_t
+from nimic.system.ansi_c import c_malloc, c_free, csize_t
 from colors import Color
 
 class Canvas(Object):
@@ -26,7 +29,7 @@ class Canvas(Object):
 
     def delete(canvas: mut @ Canvas):
         """{.inline.}"""
-        if not canvas.pixels.isNil:
+        if not canvas.pixels.is_nil:
             c_free(canvas.pixels)
 
 # proc `[]`*(canvas: Canvas, row, col: SomeInteger): Color {.inline.} =
@@ -41,7 +44,7 @@ def newCanvas(
     result.ncols = int32(width)
     result.samples_per_pixel = int32(samples_per_pixel)
     result.pixels = cast[ptr[UncheckedArray[Color]]](
-        c_malloc(c_size_t(height * width * sizeof(Color)))
+        c_malloc(csize_t(height * width * sizeof(Color)))
     )
     result.gamma_correction = float32(gamma_correction)
     return result
@@ -53,6 +56,7 @@ def draw(canvas: mut @ Canvas, row: SomeInteger, col: SomeInteger, pixel: Color)
         scale = 1.0 / float64(canvas.samples_per_pixel)
         gamma = 1.0 / float64(canvas.gamma_correction)
         pos = row*canvas.ncols + col
+    # print(pos, pixel.x, pixel.y, pixel.z)
     canvas.pixels[pos].x = pow(scale * pixel.x, gamma)
     canvas.pixels[pos].y = pow(scale * pixel.y, gamma)
     canvas.pixels[pos].z = pow(scale * pixel.z, gamma)

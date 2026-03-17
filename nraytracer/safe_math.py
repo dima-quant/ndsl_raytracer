@@ -1,6 +1,9 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
@@ -27,9 +30,8 @@ class  Degrees(float64):
 @distinct
 class  Radians(float64):
     def __isub__(a: mut @ Radians, b: Radians):
-      """{.inline, noSideEffect.}"""
-      a -= b
-      return a
+      """{.borrow.}"""
+      return super().__isub__(b)
 
     # For now we don't create our full safe unit library
     # with proper cos/sin/tan radians enforcing

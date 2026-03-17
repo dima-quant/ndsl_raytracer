@@ -1,6 +1,9 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
@@ -9,18 +12,18 @@ from math import sqrt
 # Internal
 from vec3s import Vec3, UnitVector
 from point3s import Point3
-from timing import Time
+from timing import CTime
 
 class Ray(Object):
     origin: Point3
     direction: Vec3
-    time: Time
+    time: CTime
 
     def at(ray: Ray, t: float64) -> Point3:
         """{.inline.}"""
         return ray.origin + t * ray.direction
 
-def ray(origin: Point3, direction: Vec3, time = Time(0.0)) -> Ray:
+def ray(origin: Point3, direction: Vec3, time = CTime(0.0)) -> Ray:
     """{.inline.}"""
     result = Ray()
     result.origin = origin

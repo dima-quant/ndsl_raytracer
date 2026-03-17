@@ -1,6 +1,9 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
@@ -8,7 +11,7 @@ from nimic.ntypes import *
 # Internal
 from hittables import Scene, sphere, movingSphere
 from materials import lambertian, metal, dielectric
-from primitives import Attenuation, attenuation, vec3, point3, Time
+from primitives import Attenuation, attenuation, vec3, point3, CTime
 from sampling import Rng, random
 
 def random_scene(rng: mut @ Rng) -> Scene:
@@ -34,8 +37,8 @@ def random_scene(rng: mut @ Rng) -> Scene:
                         sphere_material = lambertian(albedo)
                         center2 = center + vec3(0, random(rng, float64, 0.5), 0)
                     result.add(movingSphere(
-                                center, Time(0.0),
-                                center2, Time(1.0),
+                                center, CTime(0.0),
+                                center2, CTime(1.0),
                                 0.2, sphere_material))
                 elif choose_mat < 0.95:
                     # Metal
@@ -52,7 +55,6 @@ def random_scene(rng: mut @ Rng) -> Scene:
     result.add(sphere(point3(0,1,0), 1.0, dielectric(1.5)))
     result.add(sphere(point3(-4,1,0), 1.0, lambertian(attenuation(0.4, 0.2, 0.1))))
     result.add(sphere(point3(4,1,0), 1.0, metal(attenuation(0.7, 0.6, 0.5), fuzz = 0.0)))
-
     return result
 
 if comptime(__name__=="__main__"):

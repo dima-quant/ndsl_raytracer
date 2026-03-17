@@ -1,14 +1,17 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
-
+# /// nimic
+#
+# ///
 from __future__ import annotations
 from nimic.ntypes import *
 
 from nimic.std.os import *
-# from std.strformat import *
-# from std.monotimes import *
-from primitives import newCanvas, point3, vec3, Time, Degrees
+from nimic.std.strformat import *
+from nimic.std.monotimes import *
+from nimic.std.times import *
+from primitives import newCanvas, point3, vec3, CTime, Degrees
 from cameras import camera
 from hittables import Scene # this declaration should present because "list" function is defined in Scene
 from render import render
@@ -29,7 +32,7 @@ def main():
     are all hard-coded.
 
     The scene is rendered using the `render` function and the time it takes to render is measured using the
-    `getMonoTime` function.
+    `get_mono_time` function.
 
     The rendered image is exported to the standard output using the `exportToPPM` function.
     The time it took to render is printed to the standard error using the `write` function.
@@ -65,8 +68,8 @@ def main():
               aspect_ratio,
               aperture,
               dist_to_focus,
-              shutterOpen = Time(0.0),
-              shutterClose = Time(1.0)
+              shutterOpen = CTime(0.0),
+              shutterClose = CTime(1.0)
             )
     with var:
         canvas = newCanvas(
@@ -76,16 +79,15 @@ def main():
                )
 
     try:
-        # with let: start = getMonoTime()
+        with let: start = get_mono_time()
         # init(Weave)
         render(canvas, cam, world.list(), max_depth)
         # exit(Weave)
-        # with let: stop = getMonoTime()
-
+        with let: stop = get_mono_time()
         exportToPPM(canvas, stdout)
         stderr.write("\nDone.\n")
-        # with let: elapsed = inMilliSeconds(stop - start)
-        # stderr.write(f"Time spent: {elapsed.float64 * 1e-3:>6.3f} s\n")
+        with let: elapsed = in_milliseconds(stop - start)
+        stderr.write(f"Time spent: {float64(elapsed) * 1e-3:>6.3f} s\n")
     finally:
         canvas.delete()
 
@@ -164,3 +166,4 @@ if comptime(__name__ == "__main__"):
 #   stderr.write &"Time spent: {elapsed.float64 * 1e-3:>6.3f} s\n"
 
 # main()
+

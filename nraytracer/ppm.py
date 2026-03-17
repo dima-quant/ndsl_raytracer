@@ -1,6 +1,9 @@
 # Python NDSL Raytracer
 # Copyright (c) 2025 Dmytro Makogon, see LICENSE (MIT or Apache 2.0, as an option)
 # The project is mostly a port of Trace of Radiance (https://github.com/mratsim/trace-of-radiance, see below)
+# /// nimic
+#
+# ///
 
 from __future__ import annotations
 from nimic.ntypes import *
@@ -36,7 +39,7 @@ def exportToPPM(canvas: Canvas, path: string, imageSeries: string, sceneID: nint
         return nint(256 * clamp(c, 0.0, 0.999))
 
     with let: f = open(
-              str(Path(path) / Path(imageSeries + "_" + intToStr(sceneID, minchars = 5) + ".ppm")),
+              str(Path(path) / Path(imageSeries + "_" + int_to_str(sceneID, minchars = 5) + ".ppm")),
               fmWrite
             )
     try:
