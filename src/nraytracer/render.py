@@ -22,7 +22,7 @@ from materials import scatter
 def radiance(ray: Ray, world: HittableList, max_depth: nint, rng: mut @ Rng) -> Color:
     with var:
         _attenuation = attenuation(1.0, 1.0, 1.0)
-        ray = ray.copy() # create mutable copy, maybe ray.copy()?
+        ray = ray.copy() # create mutable copy
 
     for _ in range(max_depth):
         # Hit surface?

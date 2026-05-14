@@ -11,9 +11,9 @@ from nimic.ntypes import *
 from math import *
 # Internal
 from hittables import *
-from  materials import *
-from  cameras import *
-from  core import *
+from materials import *
+from cameras import *
+from core import *
 from primitives import *
 from sampling import *
 

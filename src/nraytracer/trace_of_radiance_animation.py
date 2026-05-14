@@ -36,20 +36,20 @@ def main_animation_ppm():
     # (which they used just for motion blur not animation)
     with const:
         aspect_ratio = 16.0 / 9.0
-        image_width = 384
+        image_width = 512
         image_height = int32(image_width / aspect_ratio)
-        samples_per_pixel = 100
+        samples_per_pixel = 300
         gamma_correction = 2.2
         max_depth = 50
 
     with const:
         dt = 0.005
         t_min = 0.0
-        t_max = 2.0
-        skip = 60  # Render every 6 physics update
+        t_max = 6.0
+        skip = 6  # Render every 6 physics update
 
     with const:
-        destDir = string("build") / "rendered8"
+        destDir = string("build") / "rendered16"
         series = "animation"
 
     with var:
@@ -102,142 +102,9 @@ def main_animation_ppm():
         canvas.delete()
 
 
-# def main_animation_mp4():
-#     # Animation is an extra added at the end of the first book
-#     # it's slow, and defines its own moving spheres
-#     # that are different from the second book
-#     # (which they used just for motion blur not animation)
-#     if comptime(True):  # Fast test
-#         with const:
-#             aspect_ratio = 16.0 / 9.0
-#             image_width = 256  # so that we have multiples of 16 everywhere
-#             image_height = int32(image_width / aspect_ratio)
-#             samples_per_pixel = 10
-#             gamma_correction = 2.2
-#             max_depth = 50
-
-#         with const:
-#             dt = 0.005
-#             t_min = 0.0
-#             t_max = 1.0
-#             skip = 6  # Render every 6 physics update
-#     else:  # Full render
-#         with const:
-#             aspect_ratio = 16.0 / 9.0
-#             image_width = 576  # so that we have multiples of 16 everywhere
-#             image_height = int32(image_width / aspect_ratio)
-#             samples_per_pixel = 300
-#             gamma_correction = 2.2
-#             max_depth = 50
-
-#         with const:
-#             dt = 0.005
-#             t_min = 0.0
-#             t_max = 6.0
-#             skip = 6  # Render every 6 physics update
-
-#     with const:
-#         destDir = string("build") / "rendered"
-#         series = "animation"
-
-#     with var:
-#         worldRNG = Rng()
-#     worldRNG.seed(0xFACADE)
-
-#     with var:
-#         animation = random_moving_spheres(
-#             worldRNG,
-#             image_height, image_width,
-#             ATime(dt), ATime(t_min), ATime(t_max)
-#         )
-
-#     with var:
-#         canvas = newCanvas(
-#             image_height, image_width,
-#             samples_per_pixel,
-#             gamma_correction
-#         )
-
-#     try:
-#         create_dir(destDir)
-
-#         # Encoding
-#         # ----------------------------------------------------------------------
-#         with let:
-#             tmp264 = string(destDir) / (series + ".264")
-#             out264 = open(tmp264, fmWrite)
-#         with var:
-#             encoder = H264Encoder.init(image_width, image_height, out264)
-#         with let:
-#             Y, Cb, Cr = encoder.getFrameBuffers()
-
-#         with let:
-#             yD = Y.initChannelDesc(image_width, subsampled=False)
-#             uD = Cb.initChannelDesc(image_width, subsampled=True)
-#             vD = Cr.initChannelDesc(image_width, subsampled=True)
-
-#         # Rendering
-#         # ----------------------------------------------------------------------
-#         with let:
-#             totalScenes = nint((t_max - t_min) / (dt * skip))
-#         stderr.write(f"Total scenes: {totalScenes}")
-
-#         # init(Weave)
-#         with var:
-#             sceneID = 0
-#             elapsed = Duration()
-#         for cam, scene in scenes(animation, skip=6):
-#             with let:
-#                 remaining = totalScenes - sceneID
-#                 timeSpent = in_microseconds(elapsed)
-#                 timeLeft = float64(remaining) * float64(timeSpent) * 1e-6
-#                 throughput = 1e6 / float64(timeSpent)
-#             stderr.write(f"\rScenes remaining: {remaining:>5}, {throughput:>7.4f} scene(s)/second, estimated time left {timeLeft:>10.3f} seconds")
-#             stderr.flush_file()
-#             with let:
-#                 start = get_mono_time()
-#             render(canvas, cam, scene.list(), max_depth)
-#             # syncRoot(Weave)
-
-#             # Video
-#             with let:
-#                 rgb = canvas.toRGB_Raw()
-#                 rgbD = unsafe_addr(rgb[0]).initChannelDesc(image_width, subsampled=False)
-#             rgbRaw_to_ycbcr420(
-#                 image_width, image_height,
-#                 rgb=rgbD,
-#                 luma=yD,
-#                 chromaBlue=uD,
-#                 chromaRed=vD,
-#                 BT601=BT601
-#             )
-#             encoder.flushFrame()
-
-#             sceneID += 1
-#             elapsed = get_mono_time() - start
-
-#         # exit(Weave)
-#         encoder.finish()
-#         out264.close()
-#         print("\nFinished writing temporary \"", string(destDir) / (series + ".264"), "\".\nMuxing into MP4")
-
-#         with var:
-#             mP4Muxer = MP4Muxer()
-#         with let:
-#             mp4 = open(string(destDir) / (series + ".mp4"), fmWrite)
-#         mP4Muxer.initialize(mp4, image_width, image_height)
-#         mP4Muxer.writeMP4_from(tmp264)
-
-#         mP4Muxer.close()
-#         mp4.close()
-#         # removeFile(tmp264)
-#         print("Finished! Rendering available at \"", string(destDir) / (series + ".mp4"), "\"")
-#     finally:
-#         canvas.delete()
-
 if comptime(__name__ == "__main__"):
     main_animation_ppm()
-#  main_animation_mp4()
+
 
 
 # Trace of Radiance
